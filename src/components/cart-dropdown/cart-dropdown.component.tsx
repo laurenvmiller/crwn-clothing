@@ -42,6 +42,3 @@ const CartDropdown = () => {
 };
 
 export default CartDropdown;
-function selectCart(state: unknown): unknown {
-  throw new Error("Function not implemented.");
-}

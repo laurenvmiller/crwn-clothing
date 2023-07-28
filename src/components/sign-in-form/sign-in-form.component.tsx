@@ -8,7 +8,7 @@ import {
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
-import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles.jsx";
+import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles";
 import { UserCredential } from "firebase/auth";
 
 const defaultFormFields = {
@@ -41,17 +41,18 @@ const SignInForm = () => {
         case "auth/wrong-password":
           alert("incorrect password for email");
           break;
-        case "auth.user-not-found":
+        case "auth/user-not-found":
           alert("no user associated with this email");
+          break;
         default:
           console.log(error);
+          break;
       }
     }
   };
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
-
     setFormFields({ ...formFields, [name]: value });
   };
 
@@ -63,24 +64,24 @@ const SignInForm = () => {
         <FormInput
           label="Email"
           type="email"
-          required
+          required={true}
           onChange={handleChange}
-          name="email"
           value={email}
+          name="email"
         />
-
         <FormInput
           label="Password"
           type="password"
-          required
+          required={true}
           onChange={handleChange}
-          name="password"
           value={password}
+          name="password"
         />
         <ButtonsContainer>
-          <Button type="submit">Sign In</Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.base} onClick={() => {}}>
+            Sign In
+          </Button>
           <Button
-            type="button"
             buttonType={BUTTON_TYPE_CLASSES.google}
             onClick={signInWithGoogle}
           >

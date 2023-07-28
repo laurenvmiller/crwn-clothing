@@ -2,17 +2,17 @@ import {
   Title,
   Preview,
   CategoryPreviewContainer,
-} from "./category-preview.styles.jsx";
+} from "./category-preview.styles";
 
-import ProductCard from "../product-card/product-card.component.js";
-import { ProductModel } from "../../models/product.model.js";
+import ProductCard from "../product-card/product-card.component";
+import { CategoryItem } from "../../store/categories/category.types";
 
 const CategoryPreview = ({
   title,
   products,
 }: {
   title: string;
-  products: ProductModel[];
+  products: CategoryItem[];
 }) => {
   return (
     <CategoryPreviewContainer>

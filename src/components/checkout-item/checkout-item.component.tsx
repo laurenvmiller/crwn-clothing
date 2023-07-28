@@ -9,12 +9,13 @@ import {
   Value,
   RemoveButton,
 } from "./checkout-item.styles";
-import { CartItemModel } from "../../models/cart.model";
+import { selectCartItems } from "../../store/cart/cart.selector";
+import { CartItem } from "../../store/cart/cart.types";
 
-const CheckoutItem = ({ cartItem }: { cartItem: CartItemModel }) => {
+const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
   const { name, imageUrl, price, quantity } = cartItem;
   const dispatch = useDispatch();
-  const cartItems = useSelector(selectCart).cartItems;
+  const cartItems = useSelector(selectCartItems);
 
   const clearItemHandler = () =>
     dispatch(clearItemFromCart(cartItems, cartItem));
@@ -40,14 +41,14 @@ const CheckoutItem = ({ cartItem }: { cartItem: CartItemModel }) => {
 };
 
 export default CheckoutItem;
-function clearItemFromCart(cartItems: any, cartItem: CartItemModel): any {
+function clearItemFromCart(cartItems: any, cartItem: CartItem): any {
   throw new Error("Function not implemented.");
 }
 
-function addItemToCart(cartItems: any, cartItem: CartItemModel): any {
+function addItemToCart(cartItems: any, cartItem: CartItem): any {
   throw new Error("Function not implemented.");
 }
 
-function removeItemFromCart(cartItems: any, cartItem: CartItemModel): any {
+function removeItemFromCart(cartItems: any, cartItem: CartItem): any {
   throw new Error("Function not implemented.");
 }

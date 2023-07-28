@@ -1,20 +1,30 @@
 import { FormInputLabel, Input, Group } from "./form-input.styles";
 
 const FormInput = ({
+  name,
   label,
-  otherProps,
+  type,
+  required = false,
+  value,
+  onChange,
 }: {
+  name?: string;
   label: string;
-  otherProps: any;
+  type: string;
+  required: boolean;
+  value: string;
+  onChange: any;
 }) => {
   return (
     <Group>
-      <Input {...otherProps} />
-      {label && (
-        <FormInputLabel shrink={otherProps.value.length}>
-          {label}
-        </FormInputLabel>
-      )}
+      <Input
+        type={type}
+        onChange={onChange}
+        value={value}
+        required={required}
+        name={name}
+      />
+      {label && <FormInputLabel shrink={value.length}>{label}</FormInputLabel>}
     </Group>
   );
 };

@@ -1,22 +1,24 @@
 import { useSelector } from "react-redux";
 
-import CheckoutItem from "../../components/checkout-item/checkout-item.component.jsx";
+import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 
 import {
   CheckoutContainer,
   CheckoutHeader,
   HeaderBlock,
   Total,
-} from "./checkout.styles.jsx";
-import { CartItemModel } from "../../models/cart.model.js";
+} from "./checkout.styles";
+import { CartItemModel } from "../../models/cart.model";
+import PaymentForm from "../../components/payment-form/payment-form.component";
+import {
+  selectCartItems,
+  selectCartTotal,
+} from "../../store/cart/cart.selector";
+import { CartItem } from "../../store/cart/cart.types";
 
 const Checkout = () => {
-  const cartItems = useSelector(selectCart).cartItems;
-  const cartTotal = cartItems.reduce(
-    (total: number, cartItem: CartItemModel) =>
-      total + cartItem.quantity * cartItem.price,
-    0
-  );
+  const cartTotal = useSelector(selectCartTotal);
+  const cartItems = useSelector(selectCartItems);
 
   return (
     <CheckoutContainer>
@@ -37,13 +39,20 @@ const Checkout = () => {
           <span>Remove</span>
         </HeaderBlock>
       </CheckoutHeader>
+      {cartItems.map((cartItem: CartItem) => {
+        return <CheckoutItem key={cartItem.id} cartItem={cartItem} />;
+      })}
 
-      {cartItems.map((cartItem: CartItemModel) => (
+      {/* {cartItems.map((cartItem: CartItemModel) => (
         <CheckoutItem key={cartItem.id} cartItem={cartItem} />
-      ))}
+      ))} */}
       <Total>Total: ${cartTotal}</Total>
+      <PaymentForm />
     </CheckoutContainer>
   );
 };
 
 export default Checkout;
+function selectCart(state: unknown): unknown {
+  throw new Error("Function not implemented.");
+}

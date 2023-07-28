@@ -8,9 +8,9 @@ import {
   Name,
   Price,
 } from "./product-card.styles";
-import { ProductModel } from "../../models/product.model";
+import { CategoryItem } from "../../store/categories/category.types";
 
-const ProductCard = ({ product }: { product: ProductModel }) => {
+const ProductCard = ({ product }: { product: CategoryItem }) => {
   const { name, price, imageUrl } = product;
   const dispatch = useDispatch();
   // const cartItems = useSelector(selectCart).cartItems;

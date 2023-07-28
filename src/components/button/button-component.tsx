@@ -3,6 +3,7 @@ import {
   BaseButton,
   GoogleSignInButton,
   InvertedButton,
+  ButtonSpinner,
 } from "./button.styles";
 
 export const BUTTON_TYPE_CLASSES = {
@@ -14,35 +15,37 @@ export const BUTTON_TYPE_CLASSES = {
 export interface buttonType {
   children?: ReactNode;
   buttonType: string;
+  isLoading?: any;
   otherProps?: any;
   onClick: () => void;
 }
 
-const Button = ({ children, buttonType, otherProps, onClick }: buttonType) => {
-  // switch (buttonType) {
-  //   case BUTTON_TYPE_CLASSES.inverted:
-  //    return <InvertedButton {...otherProps}>{children}</InvertedButton>;
-  //   case BUTTON_TYPE_CLASSES.google:
-  //     return <GoogleSignInButton {...otherProps}>{children}</GoogleSignInButton>
-  //   default:
-  //     return <BaseButton {...otherProps}>{children}</BaseButton>;
-  // }
-
+const Button = ({
+  children,
+  buttonType,
+  isLoading,
+  otherProps,
+  onClick,
+}: buttonType) => {
   if (buttonType === BUTTON_TYPE_CLASSES.inverted) {
     return (
-      <InvertedButton {...otherProps} onClick={onClick}>
-        {children}
+      <InvertedButton disabled={isLoading} {...otherProps} onClick={onClick}>
+        {isLoading ? <ButtonSpinner /> : { children }}
       </InvertedButton>
     );
   } else if (buttonType === BUTTON_TYPE_CLASSES.google) {
     return (
-      <GoogleSignInButton {...otherProps} onClick={onClick}>
+      <GoogleSignInButton
+        disabled={isLoading}
+        {...otherProps}
+        onClick={onClick}
+      >
         {children}
       </GoogleSignInButton>
     );
   } else {
     return (
-      <BaseButton {...otherProps} onClick={onClick}>
+      <BaseButton disabled={isLoading} {...otherProps} onClick={onClick}>
         {children}
       </BaseButton>
     );

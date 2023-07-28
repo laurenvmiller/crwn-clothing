@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button-component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button-component";
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -9,7 +9,7 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import { SignUpContainer } from "./sign-up-form.styles";
-import { UserCredential } from "firebase/auth";
+import { User, UserCredential } from "firebase/auth";
 
 const defaultFormFields = {
   displayName: "",
@@ -38,9 +38,9 @@ const SignUpForm = () => {
       const response: UserCredential | undefined =
         await createAuthUserWithEmailAndPassword(email, password);
 
-      await createUserDocumentFromAuth(response?.user, { displayName });
+      await createUserDocumentFromAuth(response?.user as User, { displayName });
       resetFormFields();
-    } catch (error) {
+    } catch (error: any) {
       if (error.code === "auth/email-already-in-use") {
         alert("Cannot create user, email already in use");
       } else {
@@ -63,39 +63,45 @@ const SignUpForm = () => {
         <FormInput
           label="Display Name"
           type="text"
-          required
+          required={true}
           onChange={handleChange}
-          name="displayName"
           value={displayName}
+          name="displayName"
         />
-
         <FormInput
           label="Email"
           type="email"
-          required
+          required={true}
           onChange={handleChange}
-          name="email"
           value={email}
+          name="email"
         />
 
         <FormInput
           label="Password"
           type="password"
-          required
+          required={true}
           onChange={handleChange}
-          name="password"
           value={password}
+          name="password"
         />
 
         <FormInput
           label="Confirm Password"
           type="password"
-          required
+          required={true}
           onChange={handleChange}
-          name="confirmPassword"
           value={confirmPassword}
+          name="confirmPassword"
         />
-        <Button type="submit">Sign Up</Button>
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.base}
+          onClick={() => {
+            console.log("@@@@@@@@@@@ test button");
+          }}
+        >
+          Sign Up
+        </Button>
       </form>
     </SignUpContainer>
   );
