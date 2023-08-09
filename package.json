@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.1",
@@ -15,11 +16,13 @@
     "@types/react-dom": "^18.0.0",
     "dotenv": "^16.3.1",
     "firebase": "^10.1.0",
+    "graphql": "^16.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
     "react-router-dom": "^6.14.2",
     "react-scripts": "5.0.1",
+    "redux-logger": "^3.0.6",
     "stripe": "^12.14.0",
     "styled-components": "^6.0.5",
     "typescript": "^4.4.2",
@@ -50,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/redux-logger": "3.0.9",
     "netlify-cli": "^15.9.1"
   }
 }

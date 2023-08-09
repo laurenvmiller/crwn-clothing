@@ -7,6 +7,44 @@ export const ProductCartContainer = styled.div`
   height: 350px;
   align-items: center;
   position: relative;
+`;
+
+export const ProductImage = styled.img`
+  width: 100%;
+  height: 95%;
+  object-fit: cover;
+  margin-bottom: 5px;
+`;
+
+export const ProductButton = styled.button`
+  width: 80%;
+  opacity: 0.7;
+  position: absolute;
+  top: 255px;
+  font-family: "Open Sans";
+  height: 40px;
+  letter-spacing: 0.5px;
+  line-height: 40px;
+  padding: 0 35px 0 35px;
+  font-size: 15px;
+  font-family: "Open Sans Condensed";
+  font-weight: bolder;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
+
+export const ProductCartContainer2 = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  align-items: center;
+  position: relative;
 
   img {
     width: 100%;

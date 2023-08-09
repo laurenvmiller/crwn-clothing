@@ -8,18 +8,8 @@ import { useEffect } from "react";
 // import { setCurrentUser} from './store/user/user.action';
 import { useDispatch } from "react-redux";
 
-import {
-  onAuthStateChangedListener,
-  createUserDocumentFromAuth,
-  firebaseApp,
-} from "./utils/firebase/firebase.utils";
-
 const App = () => {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   console.log("@@@@@@@@@@@@@@@@@@@@@");
-  //   firebaseApp();
-  // }, []);
 
   return (
     <Routes>

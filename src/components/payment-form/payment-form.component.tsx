@@ -1,7 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { selectCartTotal } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { BUTTON_TYPE_CLASSES } from "../button/button-component";
 import {
@@ -10,11 +9,16 @@ import {
   PaymentButton,
 } from "./payment-form.styles";
 
+import { useCartHooks } from "../../hooks/cart.hooks";
+import { useUserHooks } from "../../hooks/user.hooks";
+
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
-  const amount = useSelector(selectCartTotal);
-  const currentUser = useSelector(selectCurrentUser);
+  const { selectCartTotal } = useCartHooks();
+  const { currentUser } = useUserHooks();
+  const amount = selectCartTotal;
+  // const currentUser = selectCurrentUser;
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const paymentHandler = async (e: any) => {

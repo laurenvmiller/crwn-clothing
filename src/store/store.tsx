@@ -1,17 +1,22 @@
 import { compose, createStore, applyMiddleware, Middleware } from "redux";
-
-import {
-  CategoriesState,
-  categoriesReducer,
-} from "./categories/category.reducer";
-import { CartState, cartReducer } from "./cart/cart.reducer";
-import { UserState, userReducer } from "./user/user.reducer";
+import { logger } from "redux-logger";
+// import {
+//   CategoriesState,
+//   categoriesReducer,
+// } from "./categories/category.reducer";
+// import { CartState, cartReducer } from "./cart/cart.reducer";
+// import { UserState, userReducer } from "./user/user.reducer";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import userReducer, { UserSliceModel } from "./user/user.slice";
+import cartReducer, { CartSliceModel } from "./cart/cart.slice";
+import categoriesReducer, {
+  CategoriesSliceModel,
+} from "./categories/categories.slice";
 
 export interface StoreState {
-  user: UserState;
-  categories: CategoriesState;
-  cart: CartState;
+  user: UserSliceModel;
+  categories: CategoriesSliceModel;
+  cart: CartSliceModel;
 }
 
 export const combineReducer = combineReducers({
@@ -27,7 +32,7 @@ const rootReducer = (state: any, action: any) => {
 export const store = configureStore({
   reducer: rootReducer,
   //enhancers: storeEnhancers,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

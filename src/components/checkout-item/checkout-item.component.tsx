@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-
 import {
   CheckoutItemContainer,
   ImageContainer,
@@ -9,20 +7,24 @@ import {
   Value,
   RemoveButton,
 } from "./checkout-item.styles";
-import { selectCartItems } from "../../store/cart/cart.selector";
 import { CartItem } from "../../store/cart/cart.types";
+import { useCartHooks } from "../../hooks/cart.hooks";
 
 const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
-  const { name, imageUrl, price, quantity } = cartItem;
-  const dispatch = useDispatch();
-  const cartItems = useSelector(selectCartItems);
+  const { name, imageUrl, price, quantity, id } = cartItem;
 
-  const clearItemHandler = () =>
-    dispatch(clearItemFromCart(cartItems, cartItem));
-  const addItemHandler = () => dispatch(addItemToCart(cartItems, cartItem));
-  const removeItemHandler = () =>
-    dispatch(removeItemFromCart(cartItems, cartItem));
+  const { setCartItems, selectCart } = useCartHooks();
 
+  const removeItemClicked = () => {
+    const deepCopy = [...selectCart.cartItems];
+    const filtered = deepCopy.filter((val: CartItem) => val.id !== id);
+    setCartItems(filtered);
+  };
+
+  const addItemToCart = () => {
+    const array = [...selectCart.cartItems, cartItem];
+    setCartItems(array);
+  };
   return (
     <CheckoutItemContainer>
       <ImageContainer>
@@ -30,25 +32,14 @@ const CheckoutItem = ({ cartItem }: { cartItem: CartItem }) => {
       </ImageContainer>
       <BaseSpan> {name} </BaseSpan>
       <Quantity>
-        <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
+        <Arrow onClick={removeItemClicked}>&#10094;</Arrow>
         <Value>{quantity}</Value>
-        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
+        <Arrow onClick={addItemToCart}>&#10095;</Arrow>
       </Quantity>
       <BaseSpan> {price}</BaseSpan>
-      <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
+      <RemoveButton onClick={removeItemClicked}>&#10005;</RemoveButton>
     </CheckoutItemContainer>
   );
 };
 
 export default CheckoutItem;
-function clearItemFromCart(cartItems: any, cartItem: CartItem): any {
-  throw new Error("Function not implemented.");
-}
-
-function addItemToCart(cartItems: any, cartItem: CartItem): any {
-  throw new Error("Function not implemented.");
-}
-
-function removeItemFromCart(cartItems: any, cartItem: CartItem): any {
-  throw new Error("Function not implemented.");
-}

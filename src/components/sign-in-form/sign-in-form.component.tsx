@@ -6,10 +6,12 @@ import {
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
+  UserData,
 } from "../../utils/firebase/firebase.utils";
 
 import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles";
 import { UserCredential } from "firebase/auth";
+import { useUserHooks } from "../../hooks/user.hooks";
 
 const defaultFormFields = {
   email: "",
@@ -19,13 +21,20 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const { setCurrentUser, currentUser } = useUserHooks();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    const data: UserCredential = await signInWithGooglePopup();
+    const userData: UserData = {
+      createdAt: new Date(),
+      displayName: data.user.displayName || "",
+      email: data.user.email || "",
+    };
+    setCurrentUser(userData);
   };
 
   const handleSubmit = async (event: any) => {

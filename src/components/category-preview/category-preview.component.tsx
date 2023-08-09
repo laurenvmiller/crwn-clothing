@@ -14,6 +14,7 @@ const CategoryPreview = ({
   title: string;
   products: CategoryItem[];
 }) => {
+  console.log("@@@@@@@@@@@@ ", products);
   return (
     <CategoryPreviewContainer>
       <h2>

@@ -8,6 +8,7 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 import { selectCurrentUser } from "../../store/user/user.selector";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
+
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import {
@@ -16,11 +17,19 @@ import {
   NavLink,
   LogoContainer,
 } from "./navigation.styles";
-import { selectIsCartOpen } from "../../store/cart/cart.selector";
+import { useCartHooks } from "../../hooks/cart.hooks";
+
+import { useUserHooks } from "../../hooks/user.hooks";
 
 const Navigation = () => {
-  const currentUser = useSelector(selectCurrentUser);
-  const isCartOpen = useSelector(selectIsCartOpen);
+  const { setCurrentUser, currentUser } = useUserHooks();
+
+  const signOutUserAction = async () => {
+    await signOutUser();
+    setCurrentUser(undefined);
+  };
+
+  const { selectIsCartOpen } = useCartHooks();
 
   return (
     <Fragment>
@@ -29,10 +38,11 @@ const Navigation = () => {
           <CrwnLogo className="logo" />
         </LogoContainer>
         <NavLinks>
+          <NavLink to="/">HOME</NavLink>
           <NavLink to="/shop">SHOP</NavLink>
 
           {currentUser ? (
-            <NavLink to="/" as="span" onClick={signOutUser}>
+            <NavLink to="/" as="span" onClick={signOutUserAction}>
               SIGN OUT
             </NavLink>
           ) : (
@@ -40,7 +50,7 @@ const Navigation = () => {
           )}
           <CartIcon />
         </NavLinks>
-        {isCartOpen && <CartDropdown />}
+        {selectIsCartOpen && <CartDropdown />}
       </NavigationContainer>
       <Outlet />
     </Fragment>

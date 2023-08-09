@@ -20,9 +20,18 @@ export const NavLinks = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  cursor: pointer;
+  color: #000000;
+  text-decoration: none;
 `;
 
 export const NavLink = styled(Link)`
-  padding: 10px 15px;
+  padding: 15px 20px;
   cursor: pointer;
+  color: #000000;
+  text-decoration: none;
+
+  &:hover {
+    border: 1px solid black;
+  }
 `;

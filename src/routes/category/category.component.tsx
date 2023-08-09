@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -8,32 +8,57 @@ import Spinner from "../../components/spinner/spinner.component";
 import { CategoryContainer, Title } from "./category.styles";
 import { ProductModel } from "../../models/product.model";
 import {
-  selectCategoriesMap,
-  selectCategoriesIsLoading,
-} from "../../store/categories/category.selector";
-import { CategoryItem } from "../../store/categories/category.types";
+  CategoryItem,
+  CategoryMap,
+} from "../../store/categories/category.types";
+
+import { useCategoriesHooks } from "../../hooks/categories.hooks";
 
 const Category = () => {
   const { category } = useParams();
-  const categoriesMap = useSelector(selectCategoriesMap);
-  const isLoading = useSelector(selectCategoriesIsLoading);
-  const [products, setProducts] = useState(categoriesMap[category as string]);
+  // const categoriesMap = useSelector(selectCategoriesMap);
+  // const isLoading = useSelector(selectCategoriesIsLoading);
+
+  const { updateCategories, updateError, updateLoading, categories } =
+    useCategoriesHooks();
+
+  const [products, setProducts] = useState<CategoryItem[]>([]);
 
   useEffect(() => {
-    setProducts(categoriesMap[category as string]);
-  }, [category, categoriesMap]);
+    setProducts(categories.categoriesMap?.[category as string] || []);
+  }, [category]);
+
+  //you want this one to improve performance
+  //because it only runs when the product changes
+  const renderProductsCallback = useCallback(() => {
+    return (
+      products &&
+      products.map((product: CategoryItem) => (
+        <ProductCard key={product.id} product={product} />
+      ))
+    );
+  }, [products]);
+
+  //this will give you crap performance because it
+  //will run on ever rerender and will give you crap perfomance
+  const renderProducts = () => {
+    return (
+      products &&
+      products.map((product: CategoryItem) => (
+        <ProductCard key={product.id} product={product} />
+      ))
+    );
+  };
 
   return (
     <Fragment>
       <Title>{(category as string).toUpperCase()}</Title>
-      {isLoading ? (
+      {categories.isLoading ? (
         <Spinner />
       ) : (
         <CategoryContainer>
-          {products &&
-            products.map((product: CategoryItem) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {renderProductsCallback()}
+          {/* {renderProducts()} */}
         </CategoryContainer>
       )}
     </Fragment>

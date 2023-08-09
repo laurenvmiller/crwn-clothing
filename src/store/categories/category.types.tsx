@@ -11,6 +11,7 @@ export type CategoryItem = {
   price: number;
 };
 
+//TODO: Remove, Deprecated
 export type Category = {
   title: string;
   imageUrl: string;
@@ -19,4 +20,9 @@ export type Category = {
 
 export type CategoryMap = {
   [key: string]: CategoryItem[];
+};
+
+export type CategoriesData = {
+  title: string;
+  items: CategoryItem[];
 };

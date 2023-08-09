@@ -5,12 +5,22 @@ export const CategoryPreviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
+  padding: 20px;
 `;
 
 export const Title = styled(Link)`
-  font-size: 28px;
-  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+
   cursor: pointer;
+  color: #000000;
+  text-decoration: none;
+
+  &:hover {
+    color: grey;
+  }
 `;
 export const Preview = styled.div`
   display: grid;

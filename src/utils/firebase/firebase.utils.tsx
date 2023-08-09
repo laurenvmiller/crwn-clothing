@@ -23,7 +23,11 @@ import {
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 
-import { Category } from "../../store/categories/category.types";
+import {
+  CategoriesData,
+  Category,
+  CategoryMap,
+} from "../../store/categories/category.types";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAuevvLdH-AqjYW_qJ157P1bPeGcW4TfBg",
@@ -70,13 +74,15 @@ export const addCollectionAndDocuments = async <T extends ObjectToAdd>(
   console.log("done");
 };
 
-export const getCategoriesAndDocuments = async (): Promise<Category[]> => {
+export const getCategoriesAndDocuments = async (): Promise<
+  CategoriesData[]
+> => {
   const collectionRef = collection(db, "categories");
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map(
-    (docSnapshot) => docSnapshot.data() as Category
+    (docSnapshot) => docSnapshot.data() as CategoriesData
   );
 };
 
@@ -154,3 +160,5 @@ export const getCurrentUser = (): Promise<User | null> => {
     );
   });
 };
+
+// signInWithRedirect(auth, provider)
